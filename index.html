@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09090B">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='7' fill='%2309090B'/%3E%3Cpath d='M6 11V6h5M17 6h5v5M22 17v5h-5M11 22H6v-5' stroke='%231F98FF' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='14' cy='14' r='3.5' fill='%238B5CF6'/%3E%3C/svg%3E">
+  <title>Horizon Vision IA</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="preloader" class="preloader" role="status" aria-live="polite" aria-label="Carregando Horizon Vision IA">
+    <div class="preloader-card">
+      <div class="preloader-mark" aria-hidden="true">
+        <svg viewBox="0 0 28 28" fill="none">
+          <path d="M5 10V5h5M18 5h5v5M23 18v5h-5M10 23H5v-5" stroke="#1F98FF" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="14" cy="14" r="3.5" fill="#8B5CF6"/>
+        </svg>
+      </div>
+      <div class="preloader-title">Horizon Vision IA</div>
+      <div class="preloader-sub">VISÃO COMPUTACIONAL INDUSTRIAL · UNIDADE 01</div>
+      <div class="preloader-track">
+        <div id="preloaderBar" class="preloader-bar"></div>
+      </div>
+      <div class="preloader-meta">
+        <span id="preloaderStep">Inicializando motor de visão...</span>
+        <strong id="preloaderPct">0%</strong>
+      </div>
+    </div>
+  </div>
+  <div class="app-shell">
+    <aside class="rail" aria-label="Navegação principal">
+      <div class="brand" title="Horizon Vision IA">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 28 28" fill="none">
+            <path d="M5 10V5h5M18 5h5v5M23 18v5h-5M10 23H5v-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="14" cy="14" r="3.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="brand-name">
+          <strong>Horizon Vision IA</strong>
+          <span>UNIDADE 01 · SIMULAÇÃO</span>
+        </div>
+      </div>
+
+      <nav id="nav" class="nav-list"></nav>
+
+      <div class="rail-footer">
+        <span class="sim-dot" aria-hidden="true"></span>
+        <span class="rail-foot-text">Modo demonstrativo</span>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="topbar-title">
+          <span class="crumb">Horizon Vision IA</span>
+          <span class="sep">/</span>
+          <h1 id="viewTitle">Operação</h1>
+        </div>
+        <div class="topbar-actions">
+          <span class="sim-pill" title="Ambiente de simulação sem câmeras reais conectadas">
+            <i aria-hidden="true"></i> Simulação local
+          </span>
+          <button class="btn ghost" id="goProdBtn" type="button">Turnos</button>
+          <button class="btn accent" id="exportTopBtn" type="button">Exportar CSV</button>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- VISTA 1: OPERAÇÃO -->
+        <section class="view active" id="view-overview">
+          <div class="telemetry-strip" role="region" aria-label="Indicadores principais">
+            <div class="metric">
+              <span class="metric-label">Confirmadas hoje</span>
+              <div class="metric-value"><strong id="kpiTotal">2.486</strong><small id="kpiTotalSub">unidades validadas</small></div>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Ritmo e meta</span>
+              <div class="metric-value"><strong id="kpiHour">312 <em>un/h</em></strong><small id="kpiGoalSub">62% de 4.000</small></div>
+              <div class="thin-bar"><i id="kpiProgress" style="width:62%"></i></div>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Fontes</span>
+              <div class="metric-value"><strong id="kpiHealth">3 <em>/ 3</em></strong><small id="kpiHealthSub">3 simuladas online</small></div>
+            </div>
+            <button class="metric metric-btn" type="button" data-go="evidence">
+              <span class="metric-label">Revisão</span>
+              <div class="metric-value"><strong id="kpiReview">0</strong><small id="kpiReviewSub">sem pendências</small></div>
+            </button>
+          </div>
+
+          <div class="stage-grid">
+            <section class="stage-monitor" aria-label="Monitoramento visual">
+              <div class="stage-bar">
+                <div class="seg-group" id="camSelect" role="group" aria-label="Seleção de câmera">
+                  <button type="button" data-camera="0" class="active">Mosaico</button>
+                  <button type="button" data-camera="1">01</button>
+                  <button type="button" data-camera="2">02</button>
+                  <button type="button" data-camera="3">03</button>
+                </div>
+                <div class="stage-meta">
+                  <span id="camTime">MOSAICO · 15:42:00</span>
+                </div>
+                <div class="stage-tools">
+                  <button type="button" class="tool-btn" id="pauseBtn">Pausar</button>
+                  <button type="button" class="tool-btn" id="restartBtn" title="Reiniciar simulação">Reiniciar</button>
+                  <button type="button" class="tool-btn active" id="overlayBtn">Rastros</button>
+                  <button type="button" class="tool-btn" id="snapshotBtn">Capturar</button>
+                  <button type="button" class="tool-btn" id="expandBtn" title="Tela cheia">⛶</button>
+                </div>
+              </div>
+
+              <div class="canvas-frame" id="canvasFrame">
+                <canvas id="cam" width="1080" height="608" aria-label="Cena sintética do descascamento"></canvas>
+                <span class="canvas-badge" id="aiTag">✦ Horizon Vision IA · cena sintética</span>
+              </div>
+            </section>
+
+            <aside class="context-pane" aria-label="Assistente e eventos">
+              <div class="ia-block">
+                <div class="block-head">
+                  <span class="ia-title"><i aria-hidden="true">✦</i> Horizon Vision IA</span>
+                  <span class="ia-mode">Leitura do turno</span>
+                </div>
+                <p class="ia-insight" id="insightText">Operação simulada em curso.</p>
+                <div class="chip-row">
+                  <button type="button" class="chip" data-query="resumo">Resumo</button>
+                  <button type="button" class="chip" data-query="meta">Meta</button>
+                  <button type="button" class="chip" data-query="qualidade">Qualidade</button>
+                  <button type="button" class="chip" data-query="comparar">Estações</button>
+                </div>
+                <div class="ia-answer" id="aiAnswer" aria-live="polite">
+                  <p>Consulte os dados da operação ou selecione uma análise rápida.</p>
+                </div>
+                <form id="askForm" class="ask-bar">
+                  <input id="question" type="text" placeholder="Perguntar à operação..." aria-label="Consultar Horizon Vision IA" autocomplete="off">
+                  <button type="submit" aria-label="Enviar consulta">→</button>
+                </form>
+              </div>
+
+              <div class="events-block">
+                <div class="block-head">
+                  <span class="block-title">Eventos recentes</span>
+                  <button type="button" class="link-btn" data-go="evidence">Ver todos →</button>
+                </div>
+                <div id="recentEvents" class="event-stream"></div>
+                <div id="alertLine" class="alert-strip"></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- VISTA 2: FONTES -->
+        <section class="view module" id="view-monitor">
+          <div class="module-head">
+            <div>
+              <h2>Fontes de vídeo simuladas</h2>
+              <p>Gerencie a disponibilidade demonstrativa de cada estação e foque a visualização no monitor.</p>
+            </div>
+            <button type="button" class="btn ghost" data-go="overview">Voltar à operação</button>
+          </div>
+          <div class="surface-list" id="cameraList"></div>
+          <div class="surface-section">
+            <h3>Arquitetura de captura</h3>
+            <div class="spec-row">
+              <div><b>Protocolo previsto</b><span>RTSP / ONVIF em túnel criptografado</span></div>
+              <div><b>Processamento</b><span>Análise de transição por zona de saída</span></div>
+              <div><b>Estado atual</b><span>Simulação local sem câmeras físicas conectadas</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VISTA 3: PRODUÇÃO -->
+        <section class="view module" id="view-production">
+          <div class="module-head">
+            <div>
+              <h2>Análise de produção</h2>
+              <p>Ritmo por hora, distribuição por estação e comparativo com o turno anterior de referência.</p>
+            </div>
+            <div class="inline-tools">
+              <select id="periodSelect" aria-label="Período de análise">
+                <option value="current">Hoje · turno atual</option>
+                <option value="previous">Turno anterior · referência</option>
+              </select>
+              <button type="button" class="btn accent" id="prodCsvBtn">CSV produção</button>
+            </div>
+          </div>
+          <div class="prod-split">
+            <div class="surface-section">
+              <h3>Produção por hora</h3>
+              <div id="hourlyChart" class="hourly-chart"></div>
+            </div>
+            <div class="surface-section">
+              <h3>Distribuição por estação</h3>
+              <div id="prodBars" class="station-bars"></div>
+            </div>
+          </div>
+          <div class="surface-section">
+            <h3>Comparativo com turno anterior</h3>
+            <div id="compareTable" class="clean-table-wrap"></div>
+            <p class="muted-note" id="prodInsight"></p>
+          </div>
+        </section>
+
+        <!-- VISTA 4: EVIDÊNCIAS -->
+        <section class="view module" id="view-evidence">
+          <div class="module-head">
+            <div>
+              <h2>Central de evidências</h2>
+              <p>Audite transições registradas, revise amostras pendentes e reproduza cenas sintéticas.</p>
+            </div>
+            <button type="button" class="btn accent" id="eventsCsvBtn">Exportar eventos</button>
+          </div>
+          <div class="filter-bar">
+            <input id="searchInput" type="search" placeholder="Buscar ID ou horário (ex: B-7842)" aria-label="Buscar evento">
+            <select id="stationFilter" aria-label="Filtrar estação">
+              <option value="0">Todas as estações</option>
+              <option value="1">Estação 01</option>
+              <option value="2">Estação 02</option>
+              <option value="3">Estação 03</option>
+            </select>
+            <select id="statusFilter" aria-label="Filtrar estado">
+              <option value="all">Todos os estados</option>
+              <option value="confirmed">Confirmados</option>
+              <option value="pending">Em revisão</option>
+              <option value="rejected">Rejeitados</option>
+            </select>
+            <label class="time-field">De <input type="time" id="fromTime"></label>
+            <label class="time-field">Até <input type="time" id="untilTime"></label>
+          </div>
+          <div class="clean-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Evento</th><th>Horário</th><th>Estação</th><th>Estado</th><th>Ação</th></tr>
+              </thead>
+              <tbody id="evidenceTable"></tbody>
+            </table>
+          </div>
+          <p class="muted-note" id="evidenceInfo"></p>
+        </section>
+
+        <!-- VISTA 5: REGRAS -->
+        <section class="view module" id="view-rules">
+          <div class="module-head">
+            <div>
+              <h2>Regras, zonas e alertas</h2>
+              <p>Ajuste critérios de amostragem, limite de zona de saída e reconheça alertas operacionais.</p>
+            </div>
+            <button type="button" class="btn ghost" id="previewZoneBtn">Visualizar zonas no monitor</button>
+          </div>
+          <div class="prod-split">
+            <div class="surface-section">
+              <h3>Critérios de análise</h3>
+              <div id="ruleList" class="toggle-list"></div>
+              <div class="form-inline">
+                <label>Amostragem: 1 em <input type="number" id="sampleEvery" min="2" max="100" value="20"></label>
+                <label>Alerta sem sinal (s) <input type="number" id="alarmDelay" min="1" max="60" value="5"></label>
+                <button type="button" class="btn accent" id="saveRulesBtn">Aplicar regras</button>
+              </div>
+            </div>
+            <div class="surface-section">
+              <h3>Zona virtual de saída</h3>
+              <div id="zoneList" class="toggle-list"></div>
+            </div>
+          </div>
+          <div class="surface-section">
+            <h3>Histórico de alertas</h3>
+            <div id="alertsFull" class="toggle-list"></div>
+          </div>
+        </section>
+
+        <!-- VISTA 6: SISTEMA -->
+        <section class="view module" id="view-settings">
+          <div class="module-head">
+            <div>
+              <h2>Configuração do sistema</h2>
+              <p>Parâmetros da demonstração e arquitetura de persistência operacional.</p>
+            </div>
+          </div>
+          <div class="surface-section">
+            <h3>Parâmetros operacionais</h3>
+            <div class="form-inline">
+              <label>Meta diária <input type="number" id="goalInput" min="1" max="100000" value="4000"></label>
+              <label>Velocidade da simulação
+                <select id="speedSelect">
+                  <option value="1">1×</option>
+                  <option value="2">2×</option>
+                  <option value="4">4×</option>
+                </select>
+              </label>
+              <button type="button" class="btn accent" id="saveSettingsBtn">Salvar</button>
+              <button type="button" class="btn ghost" id="resetBtn">Restaurar padrão</button>
+            </div>
+          </div>
+          <div class="surface-section">
+            <h3>Arquitetura e integrações</h3>
+            <div class="spec-row">
+              <div><b>Horizon Vision IA</b><span>Motor de análise operacional integrado aos eventos da sessão.</span></div>
+              <div><b>Ingestão e fila durável</b><span>Eventos idempotentes por chave única com fila persistente.</span></div>
+              <div><b>Exportação</b><span>Relatórios em CSV de produção e eventos auditáveis.</span></div>
+              <div><b>Privacidade e segurança</b><span>Sem reconhecimento facial nem ranking individual de trabalhadores.</span></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <dialog id="detailDialog" aria-labelledby="detailTitle">
+    <div class="dialog-head">
+      <div>
+        <h2 id="detailTitle">Evidência</h2>
+        <p id="detailSub"></p>
+      </div>
+      <button type="button" class="btn ghost" id="closeDetailBtn">Fechar</button>
+    </div>
+    <canvas id="replayCanvas" width="1080" height="608"></canvas>
+    <div class="dialog-actions">
+      <button type="button" class="btn ghost" id="replayBtn">▶ Reproduzir 3s</button>
+      <button type="button" class="btn ghost" id="downloadFrameBtn">Capturar quadro</button>
+      <div class="push"></div>
+      <button type="button" class="btn ghost" id="rejectEventBtn">Rejeitar</button>
+      <button type="button" class="btn accent" id="approveEventBtn">Confirmar</button>
+    </div>
+    <p class="muted-note">Reconstituição sintética de demonstração, sem gravação de câmera física.</p>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="scene.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
